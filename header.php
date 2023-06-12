@@ -1,4 +1,9 @@
 <?php
+if (isset($_SESSION['user_id'])) {
+   $user_id = $_SESSION['user_id']; // Mengatur ID pengguna ke dalam variabel sesi
+} else {
+   $user_id = null;
+}
 if (isset($message)) {
    foreach ($message as $msg) {
       echo '
@@ -21,7 +26,7 @@ if (isset($message)) {
             <a href="https://www.linkedin.com/" class="fab fa-linkedin"></a>
          </div>
          <?php
-         if (!isset($_SESSION['user_id'])) {
+         if (!isset($user_id)) {
             echo '<p> <a href="login.php">Masuk</a> | <a href="register.php">Daftar</a> </p>';
          } else {
             echo '<p>Selamat datang, ' . $_SESSION['user_name'] . '! | <a href="logout.php">Logout</a> </p>';
@@ -47,8 +52,8 @@ if (isset($message)) {
             <a href="search_page.php" class="fas fa-search"></a>
             <div id="user-btn" class="fas fa-user"></div>
             <?php
-            if (isset($_SESSION['user_id'])) {
-               $select_cart_number = mysqli_query($conn, "SELECT * FROM `cart` WHERE user_id = '$user_id'") or die('query failed');
+            if (isset($user_id)) {
+               $select_cart_number = mysqli_query($conn, "SELECT * FROM cart WHERE user_id = '$user_id'") or die('query failed');
                $cart_rows_number = mysqli_num_rows($select_cart_number);
                echo '<a href="cart.php"> <i class="fas fa-shopping-cart"></i> <span>(' . $cart_rows_number . ')</span> </a>';
             }
@@ -56,7 +61,7 @@ if (isset($message)) {
          </div>
 
          <?php
-         if (isset($_SESSION['user_id'])) {
+         if (isset($user_id)) {
             echo '
             <div class="user-box">
                <p>username : <span>' . $_SESSION['user_name'] . '</span></p>

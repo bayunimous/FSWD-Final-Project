@@ -1,18 +1,29 @@
 <?php
 include 'config.php';
 session_start();
-$user_id = $_SESSION['user_id'];
+
+$user_id = null; // Inisialisasi variabel $user_id
+
+if (isset($_SESSION['user_id'])) {
+   $user_id = $_SESSION['user_id'];
+}
+
 if (isset($_POST['add_to_cart'])) {
    $product_name = $_POST['product_name'];
    $product_price = $_POST['product_price'];
    $product_image = $_POST['product_image'];
    $product_quantity = $_POST['product_quantity'];
-   $check_cart_numbers = mysqli_query($conn, "SELECT * FROM `cart` WHERE name = '$product_name' AND user_id = '$user_id'") or die('query failed');
-   if (mysqli_num_rows($check_cart_numbers) > 0) {
-      $message[] = 'already added to cart!';
+
+   if ($user_id !== null) { // Periksa jika $user_id sudah didefinisikan
+      $check_cart_numbers = mysqli_query($conn, "SELECT * FROM cart WHERE name = '$product_name' AND user_id = '$user_id'") or die('query failed');
+      if (mysqli_num_rows($check_cart_numbers) > 0) {
+         $message[] = 'already added to cart!';
+      } else {
+         mysqli_query($conn, "INSERT INTO `cart`(user_id, name, price, quantity, image) VALUES('$user_id', '$product_name', '$product_price', '$product_quantity', '$product_image')") or die('query failed');
+         $message[] = 'product added to cart!';
+      }
    } else {
-      mysqli_query($conn, "INSERT INTO `cart`(user_id, name, price, quantity, image) VALUES('$user_id', '$product_name', '$product_price', '$product_quantity', '$product_image')") or die('query failed');
-      $message[] = 'product added to cart!';
+      $message[] = 'user_id is not defined!'; // Memberikan pesan jika $user_id belum didefinisikan
    }
 }
 
@@ -23,7 +34,7 @@ $filter_min_price = $_GET['min_price'] ?? '';
 $filter_max_price = $_GET['max_price'] ?? '';
 
 // Build SQL query based on filters
-$sql = "SELECT * FROM `products` WHERE 1=1";
+$sql = "SELECT * FROM products WHERE 1=1";
 if (!empty($filter_product_name)) {
    $sql .= " AND name LIKE '%$filter_product_name%'";
 }
@@ -79,6 +90,25 @@ $select_products = mysqli_query($conn, $sql) or die('query failed');
          <a href="about.php" class="white-btn">Temukan Barang</a>
       </div>
    </section>
+
+   <section class="slider">
+      <div class="slider-container">
+         <?php
+         $select_slider = mysqli_query($conn, "SELECT * FROM slider") or die('query failed');
+         if (mysqli_num_rows($select_slider) > 0) {
+            while ($slider = mysqli_fetch_assoc($select_slider)) {
+         ?>
+               <div class="slide">
+                  <img src="images/Slider/?php echo $slider['image']; ?>" alt="Slider Image">
+                  <div class="caption"><?php echo $slider['caption']; ?></div>
+               </div>
+         <?php
+            }
+         }
+         ?>
+      </div>
+   </section>
+
 
    <section class="products">
       <h1 class="title">Produk Terbaru</h1>
