@@ -154,13 +154,6 @@ if (isset($_POST['order_btn'])) {
    </section>
 
 
-
-
-
-
-
-
-
    <?php include 'footer.php'; ?>
 
    <!-- custom js file link  -->

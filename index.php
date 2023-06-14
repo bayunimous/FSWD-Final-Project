@@ -170,7 +170,9 @@ $select_products = mysqli_query($conn, $sql) or die('query failed');
          </div>
          <div class="content">
             <h3>Tentang Kami</h3>
-            <p>Selamat datang di Galaxy Furniture, tujuan utama kami adalah memberikan solusi furnitur yang berkualitas tinggi untuk mempercantik dan meningkatkan ruang hidup Anda. Sebagai penyedia furnitur terkemuka, kami menawarkan berbagai pilihan desain yang elegan dan fungsional untuk memenuhi gaya dan kebutuhan individu Anda. Dengan menggunakan bahan-bahan terbaik dan menggabungkannya dengan keahlian pengrajin kami yang berpengalaman.</p>
+            <p>Selamat datang di Galaxy Furniture, tujuan utama kami adalah memberikan solusi furnitur yang berkualitas tinggi untuk mempercantik dan meningkatkan ruang hidup Anda.
+               Sebagai penyedia furnitur terkemuka, kami menawarkan berbagai pilihan desain yang elegan dan fungsional untuk memenuhi gaya dan kebutuhan individu Anda.
+               Dengan menggunakan bahan-bahan terbaik dan menggabungkannya dengan keahlian pengrajin kami yang berpengalaman.</p>
             <a href="about.php" class="btn">Baca Lebih Banyak</a>
          </div>
       </div>
