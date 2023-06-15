@@ -99,7 +99,7 @@ $select_products = mysqli_query($conn, $sql) or die('query failed');
             while ($slider = mysqli_fetch_assoc($select_slider)) {
          ?>
                <div class="slide">
-                  <img src="images/Slider/?php echo $slider['image']; ?>" alt="Slider Image">
+                  <img src="images/Slider/<?php echo $slider['image']; ?>" alt="Slider Image">
                   <div class="caption"><?php echo $slider['caption']; ?></div>
                </div>
          <?php
